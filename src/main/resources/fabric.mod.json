@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "quicko",
+  "version": "${version}",
+  "name": "QuickOutput",
+  "description": "A Fabric mod to enhance player interactions with blocks that have an output slot",
+  "authors": [
+    "fluX3R0"
+  ],
+  "contact": {
+    "website": "zero.fluxe.world",
+    "repo": "https://github.com/fluX3R0/QuickOutput"
+  },
+  "license": "MIT",
+  "icon": "assets/quicko/textures/item/honing_sugar.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "fluxe.world.quicko.client.QuickoClient"
+    ],
+    "main": [
+      "fluxe.world.quicko.Quicko"
+    ]
+  },
+  "mixins": [
+    "quicko.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}
