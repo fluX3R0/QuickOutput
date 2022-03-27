@@ -1,19 +1,38 @@
 package fluxe.world.quicko;
 
+import fluxe.world.quicko.items.qoGroups;
+import fluxe.world.quicko.items.qoList;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Quicko implements ModInitializer {
+    public static final String MOD_ID = "quicko";
+    public static final Logger LOG = LoggerFactory.getLogger(MOD_ID);
+    /**
+     * Creates a new {@link Identifier} based on the passed location.
+     * <p>
+     * If the location contains a collin `:` it will be split and handled like normal, otherwise it will use the default
+     * namespace contained in {@link #MOD_ID} instead of the default "minecraft" namespace.
+     *
+     * @param location The location to use
+     * @return The new {@link Identifier} instance
+     */
+    public static Identifier locate(String location) {
+        if (location.contains(":")) {
+            return new Identifier(location);
+        } else {
+            return new Identifier(MOD_ID, location);
+        }
+    }
 
     //ItemGroups
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
@@ -29,9 +48,7 @@ public class Quicko implements ModInitializer {
                 stacks.add(ItemStack.EMPTY);
                 stacks.add(ItemStack.EMPTY);
                 stacks.add(new ItemStack(Items.IRON_SHOVEL));
-            })
-            .build();
-
+            }).build();
 
     //TODO
     //  - add custom item
@@ -40,15 +57,12 @@ public class Quicko implements ModInitializer {
     //  - display custom itemGroup via Creative mode ItemGroups
 
 
-    //Item
-    public static final Item FABRIC_ITEM = new Item(new FabricItemSettings().group(ItemGroup.MISC));
 
-    public static final Item HONING_SUGAR = new Item(new FabricItemSettings().group(ItemGroup.MISC));
+    //Item
 
 
     @Override
     public void onInitialize() {
-        Registry.register(Registry.ITEM, new Identifier("tutorial", "fabric_item"), FABRIC_ITEM);
-        Registry.register(Registry.ITEM, new Identifier("quicko", "honing_sugar"), HONING_SUGAR);
+        qoList.init();
     }
 }
